@@ -1,11 +1,11 @@
-const byte powerPins[] = {53, 51, 49, 47, 45, 43, 41, 39};
+const byte adjPowerPin = 45;
 const byte latchPin = 37;
 const byte eePin = 35;
 const byte emPin = 33;
 const byte prrPin = 31;
 const byte buttonPin = A0;
 
-const byte powerLevel = 255;
+const byte powerLevel = 50;
 
 const byte auxToPowerMillis = 100;
 const byte powerToLatchMillis = 100;
@@ -21,15 +21,12 @@ boolean laserEnabled = false;
 boolean inAfterStartState = true;
 
 void setup() {
-  for(byte i = 0; i < 8; i++) {
-    pinMode(powerPins[i], OUTPUT);
-  }
+  pinMode(adjPowerPin, OUTPUT);
   pinMode(latchPin, OUTPUT);
   pinMode(eePin, OUTPUT);
   pinMode(emPin, OUTPUT);
   pinMode(prrPin, OUTPUT);
   pinMode(buttonPin, INPUT);
-
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
 }
@@ -75,7 +72,7 @@ void enableLaser() {
 }
 
 void submitPower(byte lvl) {
-  for(byte i = 0; i < 8; i++) {
-    digitalWrite(powerPins[i], ((1 << i) & lvl) == (1 << i));
+  if (lvl >= 0 && lvl <= 100) {
+    analogWrite(adjPowerPin, map(lvl, 0, 100, 0, 200));
   }
 }
