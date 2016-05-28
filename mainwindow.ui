@@ -71,7 +71,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="onOfButton">
+    <widget class="QPushButton" name="onButton">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -108,6 +108,19 @@
      </property>
      <property name="maximum">
       <number>100</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="offButton">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>81</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Off</string>
      </property>
     </widget>
    </widget>

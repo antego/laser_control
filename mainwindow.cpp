@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->powerSlider, &QSlider::valueChanged, ui->powerSpin, &QSpinBox::setValue);
     connect(ui->powerSpin, SIGNAL(valueChanged(int)), ui->powerSlider, SLOT(setValue(int)));
     connect(ui->powerSpin, SIGNAL(valueChanged(int)), this, SLOT(updatePower(int)));
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::readResponse);
+    connect(ui->onButton, &QPushButton::released, this, &MainWindow::enableLaser);
+    connect(ui->offButton, &QPushButton::released, this, &MainWindow::disableLaser);
 }
 
 void MainWindow::openSerialPort()
@@ -64,6 +67,16 @@ void MainWindow::enableLaser()
     serial->write(QByteArray().append('e').append((char)ui->powerSpin->value()));
 }
 
+void MainWindow::setInterfaceEnable() {
+    ui->onButton->setDisabled(true);
+    ui->offButton->setEnabled(true);
+}
+
+void MainWindow::setInterfaceDisable() {
+    ui->onButton->setEnabled(true);
+    ui->offButton->setDisabled(true);
+}
+
 void MainWindow::disableLaser()
 {
     serial->write(QByteArray().append('d'));
@@ -72,6 +85,17 @@ void MainWindow::disableLaser()
 void MainWindow::updatePower(int newPowerPct)
 {
     serial->write(QByteArray().append('p').append((char)newPowerPct));
+}
+
+void MainWindow::readResponse()
+{
+    QByteArray resp = serial->readAll();
+    if ((char)resp.at(0) == 'e') {
+        setInterfaceEnable();
+        ui->powerSpin->setValue(resp.at(1));
+    } else if ((char)resp.at(0) == 'd') {
+        setInterfaceDisable();
+    }
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)
