@@ -18,7 +18,7 @@ const byte latchDurationMillis = 10;
 const byte ledPin = 13;
 
 boolean laserEnabled = false;
-int lastButtonPress = 0;
+boolean inAfterStartState = true;
 
 void setup() {
   for(byte i = 0; i < 8; i++) {
@@ -35,10 +35,12 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(buttonPin) == HIGH && laserEnabled == false) {
+  if (digitalRead(buttonPin) == HIGH && laserEnabled == false && !inAfterStartState) {
     enableLaser();
   } else if (digitalRead(buttonPin) == LOW && laserEnabled == true) {
     disableLaser();
+  } else if (digitalRead(buttonPin) == LOW && laserEnabled == false) {
+    inAfterStartState = false;
   }
 }
 
