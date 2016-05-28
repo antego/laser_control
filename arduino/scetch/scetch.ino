@@ -47,9 +47,7 @@ void disableLaser() {
   delay(periodMillis);
   digitalWrite(eePin, LOW);
   delay(periodMillis);
-  for(byte i = 0; i < 8; i++) {
-    digitalWrite(powerPins[i], LOW);
-  }
+  digitalWrite(adjPowerPin, LOW);
   digitalWrite(prrPin, LOW);
   laserEnabled = false;
   digitalWrite(ledPin, LOW);
