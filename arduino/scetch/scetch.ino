@@ -58,11 +58,11 @@ void checkSerial() {
     if (message.charAt(0) == powerKey && laserEnabled == true) {
       String powerLvlString = String(message);
       powerLvlString.remove(0);
-      int lvl = powerLvlString.toInt();
-      if (lvl < 0 && lvl > 100) {
-        Serial.println("Error: Invalid power level, should be greater than 0 and smaller than 100");
+      long lvl = powerLvlString.toInt();
+      if (lvl >= 0 && lvl <= 100) {
+        submitPower((byte) lvl);
       } else {
-        submitPower((byte)message.charAt(1));
+        Serial.println("Error: Invalid power level, should be greater than 0 and smaller than 100");
       }
     } else if (message.charAt(0) == powerStatusKey) {
       Serial.println(powerLevel, DEC);
