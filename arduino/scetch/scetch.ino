@@ -1,11 +1,11 @@
-const byte adjPowerPin = 45;
-const byte latchPin = 37;
-const byte eePin = 35;
-const byte emPin = 33;
-const byte prrPin = 31;
+const byte adjPowerPin = 3;
+const byte latchPin = 4;
+const byte eePin = 5;
+const byte emPin = 6;
+const byte prrPin = 7;
 const byte buttonPin = A0;
 const byte ledPin = 13;
-const byte guideLaserPin = 29;
+const byte guideLaserPin = 8;
 
 const byte powerLevel = 20;
 
