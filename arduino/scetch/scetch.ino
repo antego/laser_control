@@ -96,8 +96,8 @@ void enableLaser() {
   digitalWrite(emPin, HIGH);
   laserEnabled = true;
   digitalWrite(ledPin, HIGH);
-  Serial.println(enableKey);
-  Serial.println((char)powerLevel);
+  Serial.print(enableKey);
+  Serial.println(powerLevel);
 }
 
 void submitPower(byte lvl) {
