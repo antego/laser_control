@@ -57,8 +57,7 @@ void checkSerial() {
     String message = buffer;
     if (message.charAt(0) == powerKey && laserEnabled == true) {
       String powerLvlString = String(message);
-      powerLvlString.remove(0);
-      long lvl = powerLvlString.toInt();
+      long lvl = powerLvlString.substring(1, len).toInt();
       if (lvl >= 0 && lvl <= 100) {
         submitPower((byte) lvl);
       } else {
