@@ -24,14 +24,9 @@ private slots:
     void openSerialPort();
     void closeSerialPort();
     void about();
-    void enableLaser();
-    void disableLaser();
-    void readResponse();
     void updatePower(int newPowerPct);
     void showStatusMessage(const QString &message);
     void handleError(QSerialPort::SerialPortError error);
-    void setInterfaceEnable();
-    void setInterfaceDisable();
 
 private:
     Ui::MainWindow *ui;

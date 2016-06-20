@@ -7,7 +7,7 @@ const byte buttonPin = A0;
 const byte ledPin = 13;
 const byte guideLaserPin = 8;
 
-const byte powerLevel = 20;
+byte powerLevel = 20;
 
 const byte auxToPowerMillis = 100;
 const byte powerToLatchMillis = 100;
@@ -55,11 +55,12 @@ void checkSerial() {
   int len = readline(Serial.read(), buffer, 80);
   if (len > 0) {
     String message = buffer;
-    if (message.charAt(0) == powerKey && laserEnabled == true) {
+    if (message.charAt(0) == powerKey) {
       String powerLvlString = String(message);
       long lvl = powerLvlString.substring(1, len).toInt();
       if (lvl >= 0 && lvl <= 100) {
-        submitPower((byte) lvl);
+        powerLevel = (byte) lvl;
+        submitPower(powerLevel);
       } else {
         Serial.println("Error: Invalid power level, should be greater than 0 and smaller than 100");
       }
